@@ -1,0 +1,100 @@
+/* Variables */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #0056b3;
+    --text-color: #333333;
+  }
+  
+  /* General styles */
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #000000;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #ebebeb;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Headings */
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--text-color);
+  }
+  
+  /* Form styles */
+  .input-section {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="file"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s ease;
+  }
+  
+  input[type="text"]:focus,
+  input[type="file"]:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+  }
+  
+  /* Button styles */
+  button {
+    display: block;
+    width: 100%;
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  /* Output styles */
+  .output-section {
+    margin-top: 30px;
+  }
+  
+  textarea {
+    width: 100%;
+    height: 120px;
+    resize: none;
+  }
+  
+  .input-image {
+    display: flex;
+    max-width: 100%;
+    height: 200px;
+    margin-top: 20px;
+    border-radius: 5px;
+  }
+  
