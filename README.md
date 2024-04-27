@@ -1,6 +1,8 @@
 # MATHPLOT-VQA
 
-## 1. Problem and Motivation
+## 1. Introduction
+### 1.1. Background Related Work
+### 1.2. Problem and Motivation
 
 In the world of math problem-solving, there's a big issue for people who struggle with understanding graphs. These individuals find it hard to make sense of math problems that include graphs, which makes learning and problem-solving tough. Most Question Answering (QA) systems today focus on answering questions from text, ignoring the needs of those who rely on graphs. Our goal is to change that. We're working on a VQA system that can understand and respond to questions about graphs. By doing this, we hope to make math more accessible and easier to understand for everyone, especially those who find graphs challenging.
 
@@ -8,7 +10,33 @@ Visual Question Answering (VQA) is a complex artificial intelligence challenge t
 
 Currently, people who face challenges with graphs have limited options when it comes to getting help with math problems. Text-based explanations often fall short in conveying the information effectively, leaving these individuals frustrated and discouraged. By developing a VQA system that can handle graph-based inputs, we aim to provide a more intuitive and accessible way for them to interact with math problems. This approach can not only improve their understanding of mathematical concepts but also boost their confidence in tackling math-related challenges.
 
-## 2. Related Research
+### 1.3. Solution Requirement
+
+#### Graph Image Submission
+Users can easily upload mathematical graph images through the system interface, ensuring seamless interaction.
+
+#### Question Input
+The system enables users to ask contextually relevant questions about the submitted graph, fostering active engagement.
+
+#### Graph-Related Answer Generation
+- **Math Question-solving (from graph):** The model provides the solutions to mathematical problems derived from the graph data, along with step-by-step explanations.
+- **Graph Interpretation:** The system offers insightful analysis of graph data, elucidating key trends and relationships to aid user interpretation.
+
+#### 1.4. Expected Results
+
+#### 1.5. Contribution
+
+| Name                     | Main Role           |
+|--------------------------|---------------------|
+| Sitthiwat Damrongpreechar| Application         |
+| Pirunrat Kaewphanoaw     | Application         |
+| Munthitra Thadthapong    | Slide/ Document     |
+| Parun Ngamcharoen        | Model               |
+| Nathas Sungworawongpana  | Model               |
+
+#### 1.6. Interesting RQ/ Hypothesis/ IV/ DV
+
+## 2. Related Work
 
 ### 2.1 A Reinforcement Learning Framework for Natural Question Generation using Bi-discriminators [Link](https://aclanthology.org/C18-1150.pdf)
 
@@ -50,17 +78,18 @@ The paper introduces LLaVA, a Large Language and Vision Assistant, designed as a
 
 The paper presents InternVL, a large-scale vision-language foundation model designed to address the growing demand for efficient vision-language understanding. Unlike previous vision-language models (VLLMs), InternVL introduces a novel architecture that allows for flexible combinations of vision encoder and middleware for both contrastive and generative tasks. Notably, InternViT-6B, a variant of InternVL, demonstrates the ability to align with language middleware such as QLLaMA and efficiently leverage image-text data from diverse sources for training. Evaluation results indicate that InternVL-Chat outperforms LLaVA-1.5, highlighting its effectiveness in visual-language tasks. Unlike traditional approaches where the vision encoder feeds text directly into the language model, InternVL leverages contrastive learning between the vision encoder and language model for enhanced performance on various visual-language tasks, showcasing its innovative approach in scaling up vision foundation models.
 
-## 3. Solution Requirements
+## 3. Methodology
+### 3.1. Datasets
+### 3.2. Preprocessing
+### 3.3. Models
+### 3.4. Training
+### 3.5. Experimental Design
+### 3.6. Evaluation
 
-### Graph Image Submission
-Users can easily upload mathematical graph images through the system interface, ensuring seamless interaction.
+## 4. Result
 
-### Question Input
-The system enables users to ask contextually relevant questions about the submitted graph, fostering active engagement.
+## 5. Discussion
 
-### Graph-Related Answer Generation
-- **Math Question-solving (from graph):** The model provides the solutions to mathematical problems derived from the graph data, along with step-by-step explanations.
-- **Graph Interpretation:** The system offers insightful analysis of graph data, elucidating key trends and relationships to aid user interpretation.
 
 ## 4. Architecture of Solution
 
@@ -80,18 +109,6 @@ Our proposed solution is a multimodal pipeline in which:
 3. Our system fetches an example from our database that corresponds with the user-specified task. For example, if a user specified that the query requires a task concerning "addition", then our system will fetch a problem-solution pair that involves using addition to find the solution.
 4. Concatenate the chart summary, problem-solution example, and user query using a prompt template.
 5. Input the concatenated prompt into the QA model to obtain the final answer.
-
-
-## 6. Task Distribution
-
-| Name                     | Main Role           |
-|--------------------------|---------------------|
-| Sitthiwat Damrongpreechar| Application         |
-| Pirunrat Kaewphanoaw     | Application         |
-| Munthitra Thadthapong    | Slide/ Document     |
-| Parun Ngamcharoen        | Model               |
-| Nathas Sungworawongpana  | Model               |
-
 
 ## 7. Progress
 
