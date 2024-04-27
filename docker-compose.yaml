@@ -1,0 +1,45 @@
+version: '3'
+services:
+  frontend:
+    command: ["npm", "start"]
+    image: frontend-nlp-project:v1.0
+    build:
+      context: .
+      dockerfile: Dockerfile.Frontend
+    environment:
+      - HOST=0.0.0.0
+      - PORT=80
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/root/frontend
+      - ./.vscode-server:/root/.vscode-server
+    networks:
+      - app-network  # Add this line
+
+  backend:
+    command: ["python", "app.py"]
+    image: backend-nlp-project:v1.0
+    build:
+      context: .
+      dockerfile: Dockerfile.Backend
+    environment:
+      - HOST=0.0.0.0
+      - PORT=5000
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/root/backend
+      - ./.vscode-server:/root/.vscode-server
+    networks:
+      - app-network  # Add this line
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+networks:
+  app-network:  # Define a network for the services
