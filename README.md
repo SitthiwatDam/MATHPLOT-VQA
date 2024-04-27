@@ -10,21 +10,40 @@ Visual Question Answering (VQA) is a complex artificial intelligence challenge t
 
 Currently, people who face challenges with graphs have limited options when it comes to getting help with math problems. Text-based explanations often fall short in conveying the information effectively, leaving these individuals frustrated and discouraged. By developing a VQA system that can handle graph-based inputs, we aim to provide a more intuitive and accessible way for them to interact with math problems. This approach can not only improve their understanding of mathematical concepts but also boost their confidence in tackling math-related challenges.
 
-### 1.3. Solution Requirement
+### 1.3. Solution
 
-#### Graph Image Submission
+#### 1.3.1. Solution Requirement
+
+##### Graph Image Submission
 Users can easily upload mathematical graph images through the system interface, ensuring seamless interaction.
 
-#### Question Input
+##### Question Input
 The system enables users to ask contextually relevant questions about the submitted graph, fostering active engagement.
 
-#### Graph-Related Answer Generation
+##### Graph-Related Answer Generation
 - **Math Question-solving (from graph):** The model provides the solutions to mathematical problems derived from the graph data, along with step-by-step explanations.
 - **Graph Interpretation:** The system offers insightful analysis of graph data, elucidating key trends and relationships to aid user interpretation.
 
-#### 1.4. Expected Results
+#### 1.3.2. Architecture of Solution
+![Architecture](./figures/Architecture.jpg)
+![System Diagram](figures/presentation.png)
 
-#### 1.5. Contribution
+We'll be developing a robust application leveraging Flask as the backend to handle the logic and API endpoints for a model. Flask, with its simplicity and flexibility, will seamlessly integrate with the NLP model, allowing efficient processing of text data. On the frontend, React will provide a dynamic user interface, offering a responsive and intuitive experience for users interacting with the NLP functionalities. By utilizing Docker, I'll encapsulate the entire application, ensuring consistency across different environments and facilitating easy deployment. This combination of Flask, React, and Docker will enable me to build a scalable and efficient solution for NLP-based applications, catering to diverse user needs with ease.
+
+#### 1.3.3. Experiments
+
+![Experiment](./figures/Experiment.png)
+
+Our proposed solution is a multimodal pipeline in which:
+1. User provides a chart image, a query they have about the provided chart, and a task that the model should perform in order to obtain the final result.
+2. Chart image is input into a chart summarizer, to obtain a text summary of the input chart. A fine-tuned Pix2Struct model for this task can be downloaded from [here](https://huggingface.co/google/matcha-chart2text-pew).
+3. Our system fetches an example from our database that corresponds with the user-specified task. For example, if a user specified that the query requires a task concerning "addition", then our system will fetch a problem-solution pair that involves using addition to find the solution.
+4. Concatenate the chart summary, problem-solution example, and user query using a prompt template.
+5. Input the concatenated prompt into the QA model to obtain the final answer.
+
+### 1.4. Expected Results
+
+### 1.5. Contribution
 
 | Name                     | Main Role           |
 |--------------------------|---------------------|
@@ -34,7 +53,9 @@ The system enables users to ask contextually relevant questions about the submit
 | Parun Ngamcharoen        | Model               |
 | Nathas Sungworawongpana  | Model               |
 
-#### 1.6. Interesting RQ/ Hypothesis/ IV/ DV
+
+
+### 1.6. Interesting RQ/ Hypothesis/ IV/ DV
 
 ## 2. Related Work
 
@@ -88,29 +109,7 @@ The paper presents InternVL, a large-scale vision-language foundation model desi
 
 ## 4. Result
 
-## 5. Discussion
-
-
-## 4. Architecture of Solution
-
-![Architecture](./figures/Architecture.jpg)
-![System Diagram](figures/presentation.png)
-
-We'll be developing a robust application leveraging Flask as the backend to handle the logic and API endpoints for a model. Flask, with its simplicity and flexibility, will seamlessly integrate with the NLP model, allowing efficient processing of text data. On the frontend, React will provide a dynamic user interface, offering a responsive and intuitive experience for users interacting with the NLP functionalities. By utilizing Docker, I'll encapsulate the entire application, ensuring consistency across different environments and facilitating easy deployment. This combination of Flask, React, and Docker will enable me to build a scalable and efficient solution for NLP-based applications, catering to diverse user needs with ease.
-
-
-## 5. Experiments
-
-![Experiment](./figures/Experiment.png)
-
-Our proposed solution is a multimodal pipeline in which:
-1. User provides a chart image, a query they have about the provided chart, and a task that the model should perform in order to obtain the final result.
-2. Chart image is input into a chart summarizer, to obtain a text summary of the input chart. A fine-tuned Pix2Struct model for this task can be downloaded from [here](https://huggingface.co/google/matcha-chart2text-pew).
-3. Our system fetches an example from our database that corresponds with the user-specified task. For example, if a user specified that the query requires a task concerning "addition", then our system will fetch a problem-solution pair that involves using addition to find the solution.
-4. Concatenate the chart summary, problem-solution example, and user query using a prompt template.
-5. Input the concatenated prompt into the QA model to obtain the final answer.
-
-## 7. Progress
+### 4.1. Progress
 
 ![Experiment_progess](./figures/Experiment_progess.png)
  
@@ -148,8 +147,20 @@ Orange = Model Generates itself (Hallucination),
 Purple = Wording/Grammatical Error,
 Green = Correct
 
-### Math PlotVQA Demo
+
+### 4.2. Deployment
+#### Math PlotVQA Demo
 
 ![MathplotVQA_Demo](./figures/MathplotVQA_Demo.gif)
 
 The web application features a text input box where users can type a question, such as "What is this graph about?" Users can also select a graph photo as an image input. After entering both the question and selecting an image, they can click on the "Process" button. The system will then analyze the question and the graph image to provide an answer, making math more accessible and understandable for users.
+
+## 5. Discussion
+
+### 5.1. Result
+### 5.2. Hypothesis
+### 5.3. Insights
+### 5.4. Limitations
+
+
+
