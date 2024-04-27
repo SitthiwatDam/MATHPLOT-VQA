@@ -43,7 +43,7 @@ function Main() {
 
   return (
     <div className="container">
-      <h1>MATH APP</h1>
+      <h1>MATHPLOT-VQA</h1>
       <div className="input-section">
         <label>Text Input:</label>
         <input type="text" name="query" value={textInput} onChange={handleTextChange} />
