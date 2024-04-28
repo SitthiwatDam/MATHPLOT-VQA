@@ -8,6 +8,9 @@ COPY frontend/package.json /frontend/
 RUN npm install 
 RUN npm install axios@1.5.1
 RUN npm install react-router-dom
+RUN npm install @mui/material @mui/icons-material 
+RUN npm install @emotion/react @emotion/styled
+
 
 
 COPY frontend ./
