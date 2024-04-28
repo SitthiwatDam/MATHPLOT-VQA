@@ -25,6 +25,7 @@ function Main() {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        timeout: 600000, // Adjust the timeout value as needed (in milliseconds)
       });
   
       if (response.status !== 200) {
@@ -42,10 +43,10 @@ function Main() {
 
   return (
     <div className="container">
-      <h1>MATH APP</h1>
+      <h1>MATHPLOT-VQA</h1>
       <div className="input-section">
         <label>Text Input:</label>
-        <input type="text" value={textInput} onChange={handleTextChange} />
+        <input type="text" name="query" value={textInput} onChange={handleTextChange} />
       </div>
       <div className="input-section">
         <label>Image Input:</label>

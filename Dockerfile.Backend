@@ -1,0 +1,18 @@
+FROM python:3.10
+
+
+WORKDIR /backend
+
+RUN pip3 install Flask
+RUN pip3 install flask-cors
+RUN pip3 install numpy
+RUN pip3 install scikit-learn
+RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+RUN pip3 install transformers
+RUN pip3 install pillow
+RUN pip3 install sentencepiece
+RUN pip3 install accelerate
+
+COPY backend ./
+
+CMD tail -f /dev/null
