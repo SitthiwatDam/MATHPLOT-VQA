@@ -6,6 +6,7 @@
 - Questions collected meticulously from college sources like college exams, quizzes, and textbooks  .
 - These questions span 30 subjects and 183 subfields, comprising 30 highly heterogeneous image types, such as charts, diagrams, maps, tables, music sheets, and chemical structures.
 ![MMMU1](./figures/MMMU1.png)
+![Matcha](./figures/Matcha.png)
 
 #### Purpose:
 
