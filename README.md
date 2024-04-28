@@ -290,7 +290,8 @@ Green = Correct
 
 
 ### 4.2. Deployment
-
+![NLPvideo](./figures/NLPvideo.gif)
+ This is how the MathPlot VQA Application work. The MathPlot VQA Application allows users to input a question prompt, such as "What is the trend of this graph," and upload a graph picture. After clicking the Process button, the application generates results from a model and displays them in the output box.
 
 ## 5. Discussion
 
