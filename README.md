@@ -154,54 +154,54 @@ The current work aligns with the focus of the AutoChart dataset by training a mo
 #### 3.2.1. CustomDataset Class: 
 This class is responsible for loading and preprocessing data for the model. It takes the following parameters:
 
-**I. image_paths:** A list of file paths to the chart images.
+**- I. image_paths:** A list of file paths to the chart images.
  
-**II.user_prompt:** A string representing the prompt provided to the model (e.g., "What is this chart about?").
+**- II.user_prompt:** A string representing the prompt provided to the model (e.g., "What is this chart about?").
  
-**III. chart_summaries:** A list of textual summaries corresponding to each image in **image_paths**.
+**- III. chart_summaries:** A list of textual summaries corresponding to each image in **image_paths**.
  
-**IV. processor:** A text processor object used for handling text data (e.g., tokenization, padding).
+**- IV. processor:** A text processor object used for handling text data (e.g., tokenization, padding).
 
 #### 3.2.2. get_autochart_urls Function:
 This function retrieves image data and corresponding summaries based on chart type. It takes two parameters:
 
-**I. url_list:** A list of dictionaries containing chart URLs and potentially additional information.
+**- I. url_list:** A list of dictionaries containing chart URLs and potentially additional information.
 
-**II. chart_type:** A string specifying the chart type (Bar, Line, or Scatter). Defaults to "Bar" if not provided.
+**- II. chart_type:** A string specifying the chart type (Bar, Line, or Scatter). Defaults to "Bar" if not provided.
 
-**III.** It retrieves image paths by constructing file paths based on the chart type and index within the **url_list**.
+**- III.** It retrieves image paths by constructing file paths based on the chart type and index within the **url_list**.
 
-**IV.** It extracts chart summaries from the **url_list** dictionaries.
+**- IV.** It extracts chart summaries from the **url_list** dictionaries.
 
 ### 3.3. Model and Preprocessing
 
 #### 3.3.1. Pix2StructForConditionalGeneration Model:
 
-**I.** The code employs a pre-trained model **Pix2StructForConditionalGeneration** from the **google/matcha-chart2text-pew** model hub. This model architecture is specifically designed for image-to-text generation tasks.
+**- I.** The code employs a pre-trained model **Pix2StructForConditionalGeneration** from the **google/matcha-chart2text-pew** model hub. This model architecture is specifically designed for image-to-text generation tasks.
 
-**II.** It's crucial to choose a pre-trained model that has been trained on a similar task or domain (image-to-text generation) for optimal performance.
+**- II.** It's crucial to choose a pre-trained model that has been trained on a similar task or domain (image-to-text generation) for optimal performance.
 
 #### 3.3.2. Pix2StructProcessor:
 
-**I.** A text processor **Pix2StructProcessor** is loaded from the same model hub. This processor handles text data by performing actions like tokenization, padding, and adding special tokens.
+**- I.** A text processor **Pix2StructProcessor** is loaded from the same model hub. This processor handles text data by performing actions like tokenization, padding, and adding special tokens.
 
-**II.** The processor ensures the text input aligns with the model's expectations.
+**- II.** The processor ensures the text input aligns with the model's expectations.
 
 ### 3.4. Training
 
 #### 3.4.1. Training Configuration:
 
-**I.Batch Size (batch_size = 1):**
+**- I.Batch Size (batch_size = 1):**
 1) The batch size defines the number of data samples processed by the model during a single training iteration. A batch size of 1 indicates the model is trained on one image-text pair at a time. Smaller batch sizes can lead to more frequent updates and potentially better convergence on complex datasets, but may also be slower to train due to increased overhead.
 
-**II.Number of Epochs (num_epochs = 5):**
+**- II.Number of Epochs (num_epochs = 5):**
 1) The number of epochs controls the number of times the entire training dataset is passed through the model. In this case, the model is trained for 5 epochs. The optimal number of epochs depends on the dataset size, model complexity, and learning rate. Training for too few epochs might result in underfitting, while training for too many epochs might lead to overfitting.
 
-**III.Adafactor Optimizer (optimizer = Adafactor(lr=0.01))**
+**- III.Adafactor Optimizer (optimizer = Adafactor(lr=0.01))**
 1) The optimizer is an algorithm that updates the model's weights based on the calculated loss during training. Adafactor is a relatively recent optimizer that adapts the learning rate for each parameter individually.
 2) The learning rate (lr=0.01) controls how much the model's weights are adjusted in each training step. A higher learning rate can lead to faster convergence but also increase the risk of instability, while a lower learning rate can lead to slower convergence but potentially better generalization.
 
-**IV.Cosine Learning Rate Scheduler (scheduler = get_cosine_schedule_with_warmup)**
+**- IV.Cosine Learning Rate Scheduler (scheduler = get_cosine_schedule_with_warmup)**
 1) A learning rate scheduler dynamically adjusts the learning rate throughout training. The code utilizes a cosine learning rate scheduler with warmup.
 2) This scheduler starts with a low learning rate, gradually increases it to a peak value, and then decreases it following a cosine curve. The warmup period allows the model to learn initial features before applying the full learning rate.
 3) Implementing a learning rate scheduler can help the model converge more effectively and potentially achieve better performance.
@@ -209,34 +209,34 @@ This function retrieves image data and corresponding summaries based on chart ty
 #### 3.4.2. Training Loop:
 The **train** function plays a pivotal role in the model's training process. It iterates through epochs, performing the following steps within each epoch:
 
-**I.Setting Model to Training Mode (model.train()):**
+**- I.Setting Model to Training Mode (model.train()):**
 This ensures the model is prepared for training, enabling operations like dropout and batch normalization that might be deactivated during evaluation.
 
-**II.Iterating Through Data Batches (DataLoader):**
+**- II.Iterating Through Data Batches (DataLoader):**
 The **DataLoader** shuffles the training data (if shuffle=True) and splits it into batches of a specified size (batch_size). This allows the model to process the data in smaller chunks, improving memory efficiency and potentially accelerating training.
 
-**III. Clearing Optimizer Gradients (optimizer.zero_grad()):** Gradients track how the loss changes with respect to each model parameter (weight or bias). They are used by the optimizer to update the parameters in the direction that minimizes the loss. Clearing gradients before each training step ensures they accumulate only for the current batch, preventing outdated gradients from influencing parameter updates.
+**- III. Clearing Optimizer Gradients (optimizer.zero_grad()):** Gradients track how the loss changes with respect to each model parameter (weight or bias). They are used by the optimizer to update the parameters in the direction that minimizes the loss. Clearing gradients before each training step ensures they accumulate only for the current batch, preventing outdated gradients from influencing parameter updates.
 
-**IV. Moving Data to Device (to(device)):**
+**- IV. Moving Data to Device (to(device)):**
 The code checks if a GPU is available using **torch.cuda.is_available()**. If so, it moves the tensors containing labels, flattened patches (image representations), and attention masks to the GPU using **.to(device)**. Training on a GPU can significantly speed up the process compared to using the CPU.
 
-**V.Forward Pass (outputs = model(...)):** The model takes the processed data (flattened patches and attention masks) along with labels (target text) as input and performs a forward pass through its layers. The forward pass computes the model's predictions and calculates the loss based on the difference between the predictions and the actual labels.
+**- V.Forward Pass (outputs = model(...)):** The model takes the processed data (flattened patches and attention masks) along with labels (target text) as input and performs a forward pass through its layers. The forward pass computes the model's predictions and calculates the loss based on the difference between the predictions and the actual labels.
 
-**VI.Calculating Loss (loss = outputs.loss):**
+**- VI.Calculating Loss (loss = outputs.loss):**
 The loss function quantifies the discrepancy between the model's predictions and the ground truth (labels). A lower loss indicates better model performance.
 
-**VII.Backpropagation (loss.backward()):**
+**- VII.Backpropagation (loss.backward()):**
 Backpropagation propagates the calculated loss backward through the model's layers. This process computes the gradients for each parameter, indicating how much they contributed to the loss.
 
-**VIII.Updating Optimizer Parameters (optimizer.step()):** 
+**- VIII.Updating Optimizer Parameters (optimizer.step()):** 
 The optimizer utilizes the gradients to update the model's weights and biases in a direction that minimizes the loss. The learning rate (set in the optimizer) determines the magnitude of these updates.
 
-**IX.Updating Learning Rate Scheduler (scheduler.step()):**
+**- IX.Updating Learning Rate Scheduler (scheduler.step()):**
 After each training step, the learning rate scheduler might adjust the learning rate based on the pre-defined schedule (cosine with warmup in this case). This helps the model converge more effectively and potentially achieve better performance.
 
 ### 3.5. Experimental Design
 
-![Experiment](./figures/Experiment.png)
+![Experiment](./figures/Experiment.drawio.png)
 
 Our proposed solution is a multimodal pipeline in which:
 1) User provides a chart image, a query they have about the provided chart, and a task that the model should perform in order to obtain the final result.
