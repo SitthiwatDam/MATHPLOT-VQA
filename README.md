@@ -243,7 +243,6 @@ Our proposed solution is a multimodal pipeline in which:
 2) Chart image is input into a chart summarizer, to obtain a text summary of the input chart. A Pix2Struct-Based Chart Summarizer model for this task, Matcha-chart2text-AutoChart, will be finetuned with the AutoChart dataset. For this task can be downloaded from [here](https://gitlab.com/bottle_shop/snlg/chart/autochart).
 3) Concatenate the chart summary result and user query using a prompt template.
 4) Input the concatenated prompt into the QA model which is MiniChat-3B to obtain the final answer.
-5) Input the concatenated prompt into the QA model which is MiniChat-3B to obtain the final answer.
 
 ### 3.6. Result of Fined-Tuned Model Compared with Pre-Train model for ChartSummarizer:
 In our previous progress report, We experimented with two chart summarizer models, MatCha-chart2text-pew [Link](https://huggingface.co/google/matcha-chart2text-pew) and MatCha-chart2text-statista [Link](https://huggingface.co/google/matcha-chart2text-statista). The results showed that while the chart summarizer worked well for some graphs. We combined the chart summary with the user query as a prompt and used the Minichat-3B QA model [Link](https://huggingface.co/GeneZC/MiniChat-3B) to generate answers for question-answering task. The results shows that the errors from the generated answers are highly correlated with those from the summaries generated from the chart summarization step. This is further proven in the case that the generated summary is correct, since the QA model was also able to provide a correct answer with good additional insight to the user query. This indicates that the performance of the QA model is mostly, if not, fully dependent on the chart summarizer.This brings us to train a model and do a crucial evaluation step – comparing the effectiveness of fine-tuned models for chart summarization against pre-trained models.
@@ -261,55 +260,48 @@ Our comparison between the pre-trained and fine-tuned models yielded interesting
 
 Conversely, the fine-tuned chart summarization model identified all errors within the charts. However, this seemingly thorough analysis resulted in issues for the fine-tuned QA model, leading to entirely irrelevant answers. These findings suggest that the fine-tuning process might have overshot the mark, becoming overly sensitive to chart complexities and potentially misinterpreting the data.
 
-### 4.1. Progress
+### 4.1. Score Evaluation
 
-![Experiment_progess](./figures/Experiment_progess.png)
- 
-[Link to Notebook](https://github.com/SitthiwatDam/MATHPLOT-VQA/tree/main/pretrained%20model)
+![ScoreEvaluation](./figures/ScoreEvaluation.png)
+1. 4.4.1. rouge1:
+- Pre-trained Matcha-chart2Text-pew: 0.2464
+- Finetuned Matcha-chart2Text-AutoChart: 0.4561
+- Analysis: Rouge-1 measures the overlap of unigrams (single words) between the predicted summary and the reference summary. A higher Rouge-1 score indicates better overlap and similarity between the summaries. The finetuned model (Matcha-chart2Text-AutoChart) has a significantly higher Rouge-1 score, suggesting that it performs better at capturing the essence of the chart in a single-word summary.
 
-In Phase 2, our primary goal was to develop a robust model capable of handling graph inputs and user queries, providing accurate and insightful answers. The phase involved the following steps:
+2. rouge2:
+- Pre-trained Matcha-chart2Text-pew: 0.0562
+- Finetuned Matcha-chart2Text-AutoChart: 0.2286
+- Analysis: Rouge-2 measures the overlap of bigrams (two-word sequences) between the predicted summary and the reference summary. A higher Rouge-2 score indicates better agreement in the two-word sequences. Similar to Rouge-1, the finetuned model has a higher Rouge-2 score, indicating improved performance in capturing more complex sequences of words.
 
-1) **Chart Summarizer Models Evaluation:**
-We experimented with two chart summarizer models, MatCha-chart2text-pew [Link](https://huggingface.co/google/matcha-chart2text-pew) and MatCha-chart2text-statista [Link](https://huggingface.co/google/matcha-chart2text-statista). The results showed that while the chart summarizer worked well for some graphs (e.g., Example 3), it mostly struggled with others, producing incorrect summaries or grammatical errors (e.g., Examples 1 and 2).
+3. rougeL:
+- Pre-trained Matcha-chart2Text-pew: 0.1757
+- Finetuned Matcha-chart2Text-AutoChart: 0.3609
+- Analysis: Rouge-L considers the longest common subsequence between the predicted summary and the reference summary. It is more flexible than Rouge-1 and Rouge-2 as it allows for gaps in the matching sequences. The finetuned model has a higher Rouge-L score, indicating better alignment with the reference summary in terms of longer subsequences.
 
-![ChartSummarizer_Example1](./figures/ChartSummarizer_Example1.png)
+4. rougeLsum:
+- Pre-trained Matcha-chart2Text-pew: 0.1757
+- Finetuned Matcha-chart2Text-AutoChart: 0.3606
+- Analysis: Rouge-Lsum is the same as Rouge-L, but it divides the score by the number of sentences in the summaries. It is useful for evaluating the average similarity per sentence. The scores are similar to Rouge-L, with the finetuned model performing better.
 
-![ChartSummarizer_Example2](./figures/ChartSummarizer_Example2.png)
-
-![ChartSummarizer_Example3](./figures/ChartSummarizer_Example3.png)
-
-Which;
-Red = Wrong Answer,
-Orange = Model Generates itself (Hallucination),
-Purple = Wording / Grammatical Error,
-Green = Correct
-
-2) **Finetuned QA Model**
-We combined the chart summary with the user query as a prompt and used the Minichat-3B QA model [Link](https://huggingface.co/GeneZC/MiniChat-3B) to generate answers for question-answering task. The results shows that the errors from the generated answers are highly correlated with those from the summaries generated from the chart summarization step. This is further proven in the case that the generated summary is correct (e.g., Example 3), since the QA model was also able to provide a correct answer with good additional insight to the user query. This indicates that the performance of the QA model is mostly, if not, fully depended on the chart summarizer.
-
-![QA_example1](./figures/QA_example1.png)
-
-![QA_example2](./figures/QA_example2.png)
-
-![QA_example2_2](./figures/QA_example2_2.png)
-
-Which;
-Red = Wrong Answer,
-Orange = Model Generates itself (Hallucination),
-Purple = Wording/Grammatical Error,
-Green = Correct
-
-
-### 4.2. Deployment
-![NLPvideo](./figures/NLPvideo.gif)
- This is how the MathPlot VQA Application work. The MathPlot VQA Application allows users to input a question prompt, such as "What is the trend of this graph," and upload a graph picture. After clicking the Process button, the application generates results from a model and displays them in the output box.
+5. BertScore:
+- Pre-trained Matcha-chart2Text-pew: 0.7929
+- Finetuned Matcha-chart2Text-AutoChart: 0.8598
+- Analysis: BertScore measures the similarity between the predicted summary and the reference summary using contextual embeddings from a pre-trained BERT model. A higher BertScore indicates greater similarity. The finetuned model has a higher BertScore, suggesting that it generates summaries that are more similar to the reference summaries according to the BERT embeddings.
 
 ## 5. Discussion
 
 ### 5.1. Result
+- The performance of the finetuned model appears better than the pretrained model, but the scoring results suggest otherwise. This discrepancy indicates that the scoring method may not be effective. Since we only trained the model for five epochs, it might be insufficient for the model to reach optimal efficiency.
+- The web application meets all requirements, but it still takes a long time to generate answers.
 ### 5.2. Hypothesis
-### 5.3. Insights
-### 5.4. Limitations
 
+### 5.3. Insights
+1. The finetuning process did not yield improvements, as the finetuned model performed worse than the original.
+2. The finetuned model consistently generates the same sentence regardless of inputs, indicating that it is underfitting the data.
+
+### 5.4. Limitations
+1. It is unclear whether the underfitting is due to a small training set or insufficient training epochs.
+2. Evaluation metrics such as ROUGE and BERTScore may not effectively capture the model's performance, as the worse-performing model obtained higher scores.
+3. The complexity and size of the models result in long answer generation times, which are dependent on the local host's hardware. This suggests the need to create model endpoints to improve efficiency.
 
 
