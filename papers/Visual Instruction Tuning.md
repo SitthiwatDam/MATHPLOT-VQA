@@ -18,7 +18,7 @@
 - The author decided to generate a conversation dataset using GPT-4 for consistency.
 - The architecture of LLaVA is composed with a vision encoder (CLIP) to encode an image into a text and create an embedding from the encoded image and the input query to feed it to the language model (Vicuna) to generate texts.
 
-![Key](./figures/LLaVa.png)
+![LLaVA](./figures/LLaVA.png)
 
 
 

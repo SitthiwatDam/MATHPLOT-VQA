@@ -5,7 +5,7 @@
 - Contains 11.5K questions across 30 subjects and 6 disciplines including Art, Business, Health & Medicine, Science, Humanities & Social Science, and Tech & Engineering, and over 183 subfields.
 - Questions collected meticulously from college sources like college exams, quizzes, and textbooks  .
 - These questions span 30 subjects and 183 subfields, comprising 30 highly heterogeneous image types, such as charts, diagrams, maps, tables, music sheets, and chemical structures.
-![Overview](./figures/MMMU1.png)
+![MMMU1](./figures/MMMU1.png)
 
 #### Purpose:
 
@@ -14,7 +14,7 @@
 - Highlights the need for next-generation multimodal foundation models.
 - Although MMMU is not a sufficient test for Expert AGI because here lacks a direct mapping between performance on MMMU and “90th percentile of skilled adults,” nor are college exams the only tasks an AGI shall tackle.
 - Compare MMMU between other benchmarks.
-![Purpose](./figures/MMMU2.png)
+![MMMU2](./figures/MMMU2.png)
 
 #### Results:
 
@@ -25,7 +25,7 @@
 - Remedial actions for invalid model responses: random selection for multiple-choice, marking incorrect for open questions.
 - Baseline models for reference: Random Choice and Frequent Choice.
 
-![Result](./figures/MMMU3.png)
+![MMMU3](./figures/MMMU3.png)
 
 - GPT-4V achieves highest accuracy around  55.7% on the MMMU benchmark. 
 - Models perform better in disciplines with 'natural' images and less reasoning, such as Art & Design and Humanities & Social Sciences, compared to fields like Science, Health & Medicine, and Technology & Engineering
