@@ -122,15 +122,18 @@ Utilizes a pre-trained image-to-text generation model with datasets specifically
 
 #### a. Key Characteristics of ChartQA:
 **I. Focus:** Question Answering (QA) about charts, emphasizing visual and logical reasoning.
+ 
 **II. Content:**
 1) Over 9.6K human-written questions.
 2) 23.1K questions automatically generated from human-written chart summaries.
 3) Covers various chart types (bar, line, scatter).
 4) Questions involve complex reasoning, visual features, and logical operations on chart data.
+ 
 **III. Limitations:**Limitations of existing chart QA datasets
 1) Template-based questions with limited vocabulary. 
 2) Restricted answer options.
 3) Lack of focus on visual and logical reasoning.
+ 
 **IV. Significance:**
 1) Provides a more realistic benchmark for evaluating chart QA models.
 2) Encourages development of models that can handle complex, visually-driven questions.
@@ -144,25 +147,33 @@ Utilizes a pre-trained image-to-text generation model with datasets specifically
 #### a. CustomDataset Class: 
 This class is responsible for loading and preprocessing data for the model. It takes the following parameters:
 **I. image_paths:** A list of file paths to the chart images.
+ 
 **II.user_prompt:** A string representing the prompt provided to the model (e.g., "What is this chart about?").
+ 
 **III. chart_summaries:** A list of textual summaries corresponding to each image in **image_paths**.
+ 
 **IV. processor:** A text processor object used for handling text data (e.g., tokenization, padding).
 
 #### b. get_autochart_urls Function:
 This function retrieves image data and corresponding summaries based on chart type. It takes two parameters:
 **I. url_list:** A list of dictionaries containing chart URLs and potentially additional information.
+
 **II. chart_type:** A string specifying the chart type (Bar, Line, or Scatter). Defaults to "Bar" if not provided.
+
 **III.** It retrieves image paths by constructing file paths based on the chart type and index within the **url_list**.
+
 **IV.** It extracts chart summaries from the **url_list** dictionaries.
 
 ### 3.3. Model and Preprocessing
 
 #### a. Pix2StructForConditionalGeneration Model:
 **I.** The code employs a pre-trained model **Pix2StructForConditionalGeneration** from the **google/matcha-chart2text-pew** model hub. This model architecture is specifically designed for image-to-text generation tasks.
+
 **II.** It's crucial to choose a pre-trained model that has been trained on a similar task or domain (image-to-text generation) for optimal performance.
 
 #### b. Pix2StructProcessor:
 **I.** A text processor **Pix2StructProcessor** is loaded from the same model hub. This processor handles text data by performing actions like tokenization, padding, and adding special tokens.
+
 **II.** The processor ensures the text input aligns with the model's expectations.
 
 ### 3.4. Training
