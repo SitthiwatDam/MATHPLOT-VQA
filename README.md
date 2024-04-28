@@ -272,7 +272,7 @@ Our comparison between the pre-trained and fine-tuned models yielded interesting
 
 Conversely, the fine-tuned chart summarization model identified all errors within the charts. However, this seemingly thorough analysis resulted in issues for the fine-tuned QA model, leading to entirely irrelevant answers. These findings suggest that the fine-tuning process might have overshot the mark, becoming overly sensitive to chart complexities and potentially misinterpreting the data.
 
-### 4.1. Score Evaluation
+### 4.1. Evaluation Score
 
 ![ScoreEvaluation](./figures/ScoreEvaluation.png)
 1. rouge1:
@@ -324,5 +324,10 @@ If the hypothesis is not true, it would imply that fine-tuning the model with th
 1. It is unclear whether the underfitting is due to a small training set or insufficient training epochs.
 2. Evaluation metrics such as ROUGE and BERTScore may not effectively capture the model's performance, as the worse-performing model obtained higher scores.
 3. The complexity and size of the models result in long answer generation times, which are dependent on the local host's hardware. This suggests the need to create model endpoints to improve efficiency.
+
+### 5.5. Future Work
+**1. Finetune the model:** Finetuned Model using better techniques such as LoRA or QLoRA and increase number of epochs to allow model convergence.
+
+**2. Deploying an AI model endpoint:** Upload finetuned model to HuggingFace/AWS Sagemaker to allow other users to experiment or deploy our model for their own purposes.
 
 
