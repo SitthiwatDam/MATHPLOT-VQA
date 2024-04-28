@@ -40,17 +40,6 @@ The system enables users to ask contextually relevant questions about the submit
 
 We'll be developing a robust application leveraging Flask as the backend to handle the logic and API endpoints for a model. Flask, with its simplicity and flexibility, will seamlessly integrate with the NLP model, allowing efficient processing of text data. On the frontend, React will provide a dynamic user interface, offering a responsive and intuitive experience for users interacting with the NLP functionalities. By utilizing Docker, I'll encapsulate the entire application, ensuring consistency across different environments and facilitating easy deployment. This combination of Flask, React, and Docker will enable me to build a scalable and efficient solution for NLP-based applications, catering to diverse user needs with ease.
 
-#### 1.3.3. Experiments
-
-![Experiment](./figures/Experiment.png)
-
-Our proposed solution is a multimodal pipeline in which:
-1. User provides a chart image, a query they have about the provided chart, and a task that the model should perform in order to obtain the final result.
-2. Chart image is input into a chart summarizer, to obtain a text summary of the input chart. A fine-tuned Pix2Struct model for this task can be downloaded from [here](https://huggingface.co/google/matcha-chart2text-pew).
-3. Our system fetches an example from our database that corresponds with the user-specified task. For example, if a user specified that the query requires a task concerning "addition", then our system will fetch a problem-solution pair that involves using addition to find the solution.
-4. Concatenate the chart summary, problem-solution example, and user query using a prompt template.
-5. Input the concatenated prompt into the QA model to obtain the final answer.
-
 ### 1.4. Expected Results
 
 ### 1.5. Contribution
@@ -71,44 +60,44 @@ Our proposed solution is a multimodal pipeline in which:
 ## 2. Related Work
 
 
-### 2.1 A Reinforcement Learning Framework for Natural Question Generation using Bi-discriminators [Link](https://aclanthology.org/C18-1150.pdf),  [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/Visual%20Question%20Generation%20(VQG).md)
+### 2.1. A Reinforcement Learning Framework for Natural Question Generation using Bi-discriminators [Link](https://aclanthology.org/C18-1150.pdf),  [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/Visual%20Question%20Generation%20(VQG).md)
 
 This paper proposes a reinforcement learning framework for generating natural questions about images, known as Visual Question Generation (VQG). The approach focuses on two specific attributes of natural questions: content and linguistic quality. To address this, the authors introduce two discriminators, one for each attribute, inspired by adversarial learning. These discriminators guide the training process by providing scores used as rewards in the reinforcement learning framework. Experimental results on a standard VQG dataset demonstrate the effectiveness and robustness of the proposed model compared to state-of-the-art methods, both through automatic metrics and human evaluation. The paper suggests potential applications of the framework to other language generation tasks, such as dialogue generation with emotional content, and suggests avenues for future research, including improving efficiency in reward assignment and exploring collaborative methods for multiple discriminators.
 
-### 2.2 A reinforcement learning approach for VQA validation: an application to diabetic macular edema grading [Link](https://arxiv.org/pdf/2307.09886.pdf),  [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/VQA%20validation.md)
+### 2.2. A reinforcement learning approach for VQA validation: an application to diabetic macular edema grading [Link](https://arxiv.org/pdf/2307.09886.pdf),  [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/VQA%20validation.md)
 
 This paper addresses the need for better validation methods for highly advanced Visual Question Answering (VQA) algorithms, particularly in the context of medical image analysis, focusing on diabetic macular edema (DME) grading. The authors propose an automatic adaptive questioning approach called Visual Turing Test (VTT) to evaluate the reasoning behavior of VQA algorithms. They introduce a reinforcement learning (RL) agent that observes previous questions and selects the next question to pose, simulating the behavior of a clinician. Through experiments, they demonstrate that this approach generates question streams similar to those of a clinician, effectively evaluating the VQA method's performance. The paper suggests the use of beta distributions to characterize the performance of the VQA system as perceived by the interrogator. The results show that the proposed method can distinguish between reasonable and unreasonable responders, even if their average performance is similar. The authors propose future directions, including applying the framework to other clinical applications, generating more VQA datasets in collaboration with clinicians, and enhancing the representation of images in the questioning process. They also suggest exploring open-ended questions, introducing noise in the state or question, exploiting logical inconsistencies in responses, and integrating the questioning strategy into the training of the VQA model for improved interpretability.
 
-### 2.3 MATCHA: Enhancing Visual Language Pretraining with Math Reasoning and Chart Derendering [Link](https://aclanthology.org/2023.acl-long.714.pdf),  [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/matcha.md)
+### 2.3. MATCHA: Enhancing Visual Language Pretraining with Math Reasoning and Chart Derendering [Link](https://aclanthology.org/2023.acl-long.714.pdf),  [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/matcha.md)
 
 MATCHA, a novel pretraining technique for visual language models, integrates math reasoning and chart derendering tasks into the Pix2Struct base model. By incorporating a diverse mixture of pretraining tasks, including math reasoning, chart derendering, and screenshot parsing, MATCHA significantly enhances the model's ability to understand and generate text from visual data. Evaluation across various datasets demonstrates MATCHA's superiority over baselines, including Pix2Struct, with notable improvements in tasks such as ChartQA, PlotQA, and Chart-to-Text summarization. However, limitations include struggles with complex math problems and plot details, suggesting areas for further research and refinement. Despite these limitations, MATCHA's advancements represent a significant step forward in improving the capabilities of visual language models, albeit within a narrow scope of the visual language domain.
 
-### 2.4 GeoQA: A Geometric Question Answering Benchmark Towards Multimodal Numerical Reasoning [Link](https://aclanthology.org/2021.findings-acl.46/), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/geoqa.md)
+### 2.4. GeoQA: A Geometric Question Answering Benchmark Towards Multimodal Numerical Reasoning [Link](https://aclanthology.org/2021.findings-acl.46/), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/geoqa.md)
 
 GeoQA presents a benchmark for automatic math problem-solving, focusing on geometric questions that demand understanding of textual descriptions, visual diagrams, and theorem knowledge. To address this challenge, the Neural Geometric Solver (NGS) is introduced, employing a multimodal architecture to parse and generate interpretable programs. NGS integrates a text encoder, diagram encoder, and LSTM decoder with Bahdanau attention, augmented with self-supervised auxiliary tasks to enhance cross-modal semantic representation. Despite significant advancements, results on the GeoQA dataset remain below human performance, underscoring the need for further research in multimodal numerical reasoning.
 
-### 2.5 ChartQA: A Benchmark for Question Answering about Charts with Visual and Logical Reasoning [Link](https://aclanthology.org/2022.findings-acl.177/), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/chartvqa.md)
+### 2.5. ChartQA: A Benchmark for Question Answering about Charts with Visual and Logical Reasoning [Link](https://aclanthology.org/2022.findings-acl.177/), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/chartvqa.md)
 
 The ChartQA system addresses the need for complex reasoning in data analysis by introducing a large-scale benchmark dataset comprising human-written and generated questions from chart summaries. Unlike existing datasets, ChartQA emphasizes visual and logical reasoning over fixed-vocabulary questions, providing a more comprehensive evaluation framework. VisionTaPas, the proposed solution, employs two transformer-based models to integrate visual features and chart data tables for unified question answering. The models achieve state-of-the-art results on both previous datasets and the newly introduced ChartQA benchmark, underscoring their effectiveness. However, challenges persist in answering complex reasoning questions, particularly in data extraction, highlighting the need for further advancements in deep learning and rule-based methods to mitigate errors.
 
-### 2.6 MMMU: A Massive Multi-discipline Multimodal Understanding and Reasoning Benchmark for Expert AGI [Link](https://arxiv.org/abs/2311.16502), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/MMMU.md)
+### 2.6. MMMU: A Massive Multi-discipline Multimodal Understanding and Reasoning Benchmark for Expert AGI [Link](https://arxiv.org/abs/2311.16502), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/MMMU.md)
 
 MMMU, a comprehensive benchmark for expert-level multimodal understanding and reasoning, encompasses 11.5K questions across 30 subjects and 6 disciplines, sourced meticulously from college exams, quizzes, and textbooks. It spans a wide array of image types and subfields, aiming to push the boundaries of what large multimodal models (LLMs) can achieve towards Expert AGI. Although not a direct measure of AGI capability, MMMU assesses models' performance akin to tasks faced by experts, highlighting the necessity for next-generation multimodal foundation models. Evaluation of various LLMs, including text-only models with OCR or captioning deployment, reveals GPT-4V achieving the highest accuracy of around 55.7% on the MMMU benchmark. Interestingly, models perform better in disciplines with 'natural' images and less reasoning, such as Art & Design and Humanities & Social Sciences, compared to fields like Science, Health & Medicine, and Technology & Engineering.
 
-### 2.7 MathVista: Evaluating Mathematical Reasoning of Foundation Models in Visual Contexts [Link](https://arxiv.org/abs/2310.02255), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/MathVista.md)
+### 2.7. MathVista: Evaluating Mathematical Reasoning of Foundation Models in Visual Contexts [Link](https://arxiv.org/abs/2310.02255), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/MathVista.md)
 
 MathVista introduces a benchmark for evaluating the mathematical reasoning abilities of large language models (LLMs) and large multimodal models (LMMs) in visually complex scenarios. With a dataset combining challenges from diverse mathematical and visual tasks, including newly created datasets addressing logical, statistical, and scientific reasoning, MathVista evaluates 12 prominent foundation models. GPT-4V emerges as the best performer, achieving the highest accuracy of 49.9%, albeit still falling short of human performance by 10.4%. Augmented LLMs, particularly GPT-4 with program-of-thought prompting, exhibit superior performance over text-only LLMs, while Multimodal Bard shows promise but falls significantly below human performance. Fine-grained analysis highlights GPT-4V's strengths across various tasks and contexts but reveals shortcomings in logical reasoning and numeric common sense tasks. Additionally, qualitative analysis uncovers error sources such as hallucination in Multimodal Bard's predictions, shedding light on areas for improvement in multimodal reasoning models.
 
-### 2.8 Pix2Struct: Screenshot Parsing as Pretraining for Visual Language Understanding [Link](https://doi.org/10.48550/arXiv.2210.03347), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/pixel2struct.md)
+### 2.8. Pix2Struct: Screenshot Parsing as Pretraining for Visual Language Understanding [Link](https://doi.org/10.48550/arXiv.2210.03347), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/pixel2struct.md)
 
 
 Pix2Struct presents a novel pretraining approach for visually-situated language understanding models, aiming to address tasks across documents, illustrations, user interfaces (UIs), and natural images. By parsing HTML screenshots into semantic structures, Pix2Struct achieves state-of-the-art results across various benchmarks without relying on domain-specific modifications. The method leverages transformer-based architectures and a large corpus of HTML screenshots for pretraining, demonstrating superior performance compared to prior visual methods. Additionally, the paper discusses challenges in training general-purpose visual language understanding models, such as resolution sensitivity and the need for better data curation, while outlining future research directions to advance the field further. Overall, Pix2Struct lays a strong foundation for enhancing visually-situated language understanding and paves the way for future innovations in this domain.
 
-### 2.9 Visual Instruction Tuning [Link](https://arxiv.org/abs/2304.08485), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/Visual%20Instruction%20Tuning.md)
+### 2.9. Visual Instruction Tuning [Link](https://arxiv.org/abs/2304.08485), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/Visual%20Instruction%20Tuning.md)
 
 The paper introduces LLaVA, a Large Language and Vision Assistant, designed as an end-to-end trained large multimodal model that integrates vision encoding with language understanding for general-purpose visual and linguistic comprehension. Notably, the study explores leveraging machine-generated instruction-following data to enhance instruction-tuning capabilities in multimodal models. Results indicate that LLaVA exhibits comparable multimodal chat abilities to multimodal GPT-4 on unseen image-instruction pairs, achieving an 85.1% relative score compared to GPT-4 on a synthetic multimodal instruction-following dataset. Furthermore, when fine-tuned on a Science QA task, both LLaVA and GPT-4 achieve a high accuracy of 92.53%, underscoring the effectiveness of incorporating detailed description tasks and complex reasoning tasks in enhancing the conversational capabilities of multimodal models like LLaVA. The architecture of LLaVA integrates a vision encoder (CLIP) to encode images into text, which is then combined with input queries and fed into the language model (Vicuna) to generate textual responses, showcasing the model's versatility and performance across various tasks.
 
-### 2.10 InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks [Link](https://arxiv.org/abs/2312.14238), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/InternVL.md)
+### 2.10. InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks [Link](https://arxiv.org/abs/2312.14238), [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/InternVL.md)
 
 The paper presents InternVL, a large-scale vision-language foundation model designed to address the growing demand for efficient vision-language understanding. Unlike previous vision-language models (VLLMs), InternVL introduces a novel architecture that allows for flexible combinations of vision encoder and middleware for both contrastive and generative tasks. Notably, InternViT-6B, a variant of InternVL, demonstrates the ability to align with language middleware such as QLLaMA and efficiently leverage image-text data from diverse sources for training. Evaluation results indicate that InternVL-Chat outperforms LLaVA-1.5, highlighting its effectiveness in visual-language tasks. Unlike traditional approaches where the vision encoder feeds text directly into the language model, InternVL leverages contrastive learning between the vision encoder and language model for enhanced performance on various visual-language tasks, showcasing its innovative approach in scaling up vision foundation models.
 
@@ -120,7 +109,7 @@ The paper presents InternVL, a large-scale vision-language foundation model desi
 [The Code Snippet](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/finetuned%20model/visual%20encoder/matcha-chart2text-pew.ipynb)
 Utilizes a pre-trained image-to-text generation model with datasets specifically designed for tasks involving question answering about charts. One such dataset is ChartQA.
 
-#### a. Key Characteristics of ChartQA:
+#### 3.1.1. Key Characteristics of ChartQA:
 **I. Focus:** Question Answering (QA) about charts, emphasizing visual and logical reasoning.
  
 **II. Content:**
@@ -139,13 +128,13 @@ Limitations of existing chart QA datasets
 1) Provides a more realistic benchmark for evaluating chart QA models.
 2) Encourages development of models that can handle complex, visually-driven questions.
 
-#### b. Alignment with This Work:
+#### 3.1.2. Alignment with This Work:
 1) While the current code trains a model for chart summarization, datasets like ChartQA highlight the growing importance of models that can reason about and answer intricate questions posed on charts.
 2) Future improvements to this work could involve incorporating techniques or models specifically designed for chart-based question answering tasks, potentially leveraging datasets like ChartQA for training and evaluation.
 
 ### 3.2. Data Preparation
 
-#### a. CustomDataset Class: 
+#### 3.2.1. CustomDataset Class: 
 This class is responsible for loading and preprocessing data for the model. It takes the following parameters:
 
 **I. image_paths:** A list of file paths to the chart images.
@@ -156,7 +145,7 @@ This class is responsible for loading and preprocessing data for the model. It t
  
 **IV. processor:** A text processor object used for handling text data (e.g., tokenization, padding).
 
-#### b. get_autochart_urls Function:
+#### 3.2.2. get_autochart_urls Function:
 This function retrieves image data and corresponding summaries based on chart type. It takes two parameters:
 
 **I. url_list:** A list of dictionaries containing chart URLs and potentially additional information.
@@ -169,13 +158,13 @@ This function retrieves image data and corresponding summaries based on chart ty
 
 ### 3.3. Model and Preprocessing
 
-#### a. Pix2StructForConditionalGeneration Model:
+#### 3.3.1. Pix2StructForConditionalGeneration Model:
 
 **I.** The code employs a pre-trained model **Pix2StructForConditionalGeneration** from the **google/matcha-chart2text-pew** model hub. This model architecture is specifically designed for image-to-text generation tasks.
 
 **II.** It's crucial to choose a pre-trained model that has been trained on a similar task or domain (image-to-text generation) for optimal performance.
 
-#### b. Pix2StructProcessor:
+#### 3.3.2. Pix2StructProcessor:
 
 **I.** A text processor **Pix2StructProcessor** is loaded from the same model hub. This processor handles text data by performing actions like tokenization, padding, and adding special tokens.
 
@@ -183,7 +172,7 @@ This function retrieves image data and corresponding summaries based on chart ty
 
 ### 3.4. Training
 
-#### a. Training Configuration:
+#### 3.4.1. Training Configuration:
 
 **I.Batch Size (batch_size = 1):**
 1) The batch size defines the number of data samples processed by the model during a single training iteration. A batch size of 1 indicates the model is trained on one image-text pair at a time. Smaller batch sizes can lead to more frequent updates and potentially better convergence on complex datasets, but may also be slower to train due to increased overhead.
@@ -200,7 +189,7 @@ This function retrieves image data and corresponding summaries based on chart ty
 2) This scheduler starts with a low learning rate, gradually increases it to a peak value, and then decreases it following a cosine curve. The warmup period allows the model to learn initial features before applying the full learning rate.
 3) Implementing a learning rate scheduler can help the model converge more effectively and potentially achieve better performance.
 
-#### b. Training Loop:
+#### 3.4.2. Training Loop:
 The **train** function plays a pivotal role in the model's training process. It iterates through epochs, performing the following steps within each epoch:
 
 **I.Setting Model to Training Mode (model.train()):**
@@ -228,7 +217,19 @@ The optimizer utilizes the gradients to update the model's weights and biases in
 **IX.Updating Learning Rate Scheduler (scheduler.step()):**
 After each training step, the learning rate scheduler might adjust the learning rate based on the pre-defined schedule (cosine with warmup in this case). This helps the model converge more effectively and potentially achieve better performance.
 
-### 3.5. Evaluation
+### 3.5. Experimental Design
+
+![Experiment](./figures/Experiment.png)
+
+Our proposed solution is a multimodal pipeline in which:
+1) User provides a chart image, a query they have about the provided chart, and a task that the model should perform in order to obtain the final result.
+2) Chart image is input into a chart summarizer, to obtain a text summary of the input chart. A fine-tuned Pix2Struct model for this task can be downloaded from [here](https://huggingface.co/google/matcha-chart2text-pew).
+3) Our system fetches an example from our database that corresponds with the user-specified task. For example, if a user specified that the query requires a task concerning "addition", then our system will fetch a problem-solution pair that involves using addition to find the solution.
+4) Concatenate the chart summary, problem-solution example, and user query using a prompt template.
+5) Input the concatenated prompt into the QA model to obtain the final answer.
+
+
+### 3.6. Evaluation
 
 ## 4. Result
 
