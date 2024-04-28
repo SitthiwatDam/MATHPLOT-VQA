@@ -7,7 +7,9 @@ Symbolab is a popular tool that helps people solve math problems step by step. I
 
 Our project was inspired by Symbolab's limitations. We noticed that it doesn't explain graphs well, which can be tough for people who struggle with understanding graphs. So, we decided to create a new system called Math Plot VQA. This system lets users ask questions about graphs by inputting both a question and a photo of the graph. It's different from Symbolab because it helps users understand the meaning and context of graphs, not just compute functions and equations.
 
-Our goal is to make math easier for everyone, especially for those who find graphs hard to understand. We believe that by improving how people interact with graphs, we can boost their confidence in solving math problems.
+To enhance our system's capabilities, we integrated the MATCHA model, an enhanced version of the Pix2Struct model. MATCHA combines math reasoning and chart derendering tasks to improve visual language models' capabilities. This integration allows our system to better understand and respond to questions about graphs, making math more accessible and understandable for everyone, especially those who struggle with graph comprehension.
+
+Additionally, we utilized the ChartQA dataset to fine-tune our QA model. ChartQA focuses on visual and logical reasoning over charts, providing a benchmark for complex reasoning questions related to charts. By leveraging these resources and technologies, we aim to create a system that not only computes solutions but also helps users understand the meaning and context of graphs, ultimately making math easier and more accessible.
 
 ### 1.2. Problem and Motivation
 
