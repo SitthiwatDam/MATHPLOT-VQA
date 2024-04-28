@@ -42,6 +42,20 @@ We'll be developing a robust application leveraging Flask as the backend to hand
 
 ### 1.4. Expected Results
 
+#### User Interaction
+**1) Seamless Graph Upload:** Users can effortlessly upload graph images through the system's interface. This should involve functionalities like image selection from device storage.
+**2) Contextual Question Input:** The system allows users to ask questions directly related to the uploaded graph. This means the questions should be phrased in a way that considers the graph's structure and properties.
+
+#### System Response
+**1) Math Question Solving:** When a user asks a math question that can be solved using the graph data, the system should provide the solution along with a step-by-step explanation. This explanation should be clear and understandable, ideally breaking down the process into logical steps.
+**2) Graph Analysis and Interpretation:** The system should analyze the uploaded graph and offer insightful interpretations. This could include identifying key characteristics like the number of nodes and edges, degrees of nodes,  presence of cycles or paths, or highlighting any relevant patterns or trends within the graph structure.
+
+#### Math PlotVQA Demo
+
+![MathplotVQA_Demo](./figures/MathplotVQA_Demo.gif)
+
+The web application features a text input box where users can type a question, such as "What is this graph about?" Users can also select a graph photo as an image input. After entering both the question and selecting an image, they can click on the "Process" button. The system will then analyze the question and the graph image to provide an answer, making math more accessible and understandable for users.
+
 ### 1.5. Contribution
 
 | Name                     | Main Role           |
@@ -273,11 +287,7 @@ Green = Correct
 
 
 ### 4.2. Deployment
-#### Math PlotVQA Demo
 
-![MathplotVQA_Demo](./figures/MathplotVQA_Demo.gif)
-
-The web application features a text input box where users can type a question, such as "What is this graph about?" Users can also select a graph photo as an image input. After entering both the question and selecting an image, they can click on the "Process" button. The system will then analyze the question and the graph image to provide an answer, making math more accessible and understandable for users.
 
 ## 5. Discussion
 
