@@ -70,7 +70,19 @@ The web application features a text input box where users can type a question, s
 
 
 
-### 1.6. Interesting RQ/ Hypothesis/ IV/ DV
+### 1.6. Interesting Research Question/ Hypothesis/ Independent Variable/ Dependent Variable
+
+- **Research question:** Does fine-tuning a model improve its performance compared to using a pretrained model when answering questions based on line plots, bar plots, or scatter plots?
+
+- **Hypothesis:** We hypothesize that our model, fine-tuned with the AutoChart dataset for specific types of charts (line plot, bar plot, and scatter plot), will outperform the pretrained model in question answering related to charts.
+
+- **Independent Variables:** Model type (pretrained or fine-tuned).
+
+- **Dependent Variables:** Performance metrics such as Rouge Scores and BertScore.
+
+- **Control Variables:** Python libraries and the Python environment.
+
+- **Random Variables:** The input charts and the questions asked (which can be confounding if manipulated).
 
 
 ## 2. Related Work
@@ -263,7 +275,7 @@ Conversely, the fine-tuned chart summarization model identified all errors withi
 ### 4.1. Score Evaluation
 
 ![ScoreEvaluation](./figures/ScoreEvaluation.png)
-1. 4.4.1. rouge1:
+1. rouge1:
 - Pre-trained Matcha-chart2Text-pew: 0.2464
 - Finetuned Matcha-chart2Text-AutoChart: 0.4561
 - Analysis: Rouge-1 measures the overlap of unigrams (single words) between the predicted summary and the reference summary. A higher Rouge-1 score indicates better overlap and similarity between the summaries. The finetuned model (Matcha-chart2Text-AutoChart) has a significantly higher Rouge-1 score, suggesting that it performs better at capturing the essence of the chart in a single-word summary.
@@ -288,12 +300,21 @@ Conversely, the fine-tuned chart summarization model identified all errors withi
 - Finetuned Matcha-chart2Text-AutoChart: 0.8598
 - Analysis: BertScore measures the similarity between the predicted summary and the reference summary using contextual embeddings from a pre-trained BERT model. A higher BertScore indicates greater similarity. The finetuned model has a higher BertScore, suggesting that it generates summaries that are more similar to the reference summaries according to the BERT embeddings.
 
+### 4.2. Deployment
+![NLPvideo](./figures/NLPvideonew.gif)
+ This is how the MathPlot VQA Application work. The MathPlot VQA Application allows users to input a question prompt, such as "What is the trend of this graph," and upload a graph picture. After clicking the Process button, the application generates results from a model and displays them in the output box.
+
+
 ## 5. Discussion
 
 ### 5.1. Result
 - The performance of the finetuned model appears better than the pretrained model, but the scoring results suggest otherwise. This discrepancy indicates that the scoring method may not be effective. Since we only trained the model for five epochs, it might be insufficient for the model to reach optimal efficiency.
 - The web application meets all requirements, but it still takes a long time to generate answers.
+
 ### 5.2. Hypothesis
+In this study, we investigate whether fine-tuning a model with the AutoChart dataset leads to improved performance compared to using a pretrained model when answering questions based on line plots, bar plots, or scatter plots. Our hypothesis posits that the fine-tuned model would outperform the pretrained model in question answering related to charts. **However, the results of our experiment suggest otherwise.**
+
+If the hypothesis is not true, it would imply that fine-tuning the model with the AutoChart dataset does not lead to better performance compared to using a pretrained model when answering questions based on line plots, bar plots, or scatter plots. In this case, the performance metrics, such as Rouge Scores and BertScore, may show significant differences between the pretrained and fine-tuned models. However, these metrics might not fully capture the model's performance in terms of chart interpretation. The control variables, including Python libraries and the Python environment, remain constant in both scenarios, ensuring that any differences in performance are attributed to the independent variable (model type). The random variables, such as the input charts and questions, could still introduce variability. Nonetheless, the lack of improvement in performance would suggest that the specific fine-tuning approach did not yield the expected benefits.
 
 ### 5.3. Insights
 1. The finetuning process did not yield improvements, as the finetuned model performed worse than the original.
