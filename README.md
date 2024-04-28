@@ -44,10 +44,12 @@ We'll be developing a robust application leveraging Flask as the backend to hand
 
 #### User Interaction
 **1) Seamless Graph Upload:** Users can effortlessly upload graph images through the system's interface. This should involve functionalities like image selection from device storage.
+
 **2) Contextual Question Input:** The system allows users to ask questions directly related to the uploaded graph. This means the questions should be phrased in a way that considers the graph's structure and properties.
 
 #### System Response
 **1) Math Question Solving:** When a user asks a math question that can be solved using the graph data, the system should provide the solution along with a step-by-step explanation. This explanation should be clear and understandable, ideally breaking down the process into logical steps.
+
 **2) Graph Analysis and Interpretation:** The system should analyze the uploaded graph and offer insightful interpretations. This could include identifying key characteristics like the number of nodes and edges, degrees of nodes,  presence of cycles or paths, or highlighting any relevant patterns or trends within the graph structure.
 
 #### Math PlotVQA Demo
@@ -118,33 +120,34 @@ The paper presents InternVL, a large-scale vision-language foundation model desi
 ## 3. Methodology
 
 
-### 3.1. ChartQA Dataset
+### 3.1. AutoChart
 
-[The Code Snippet](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/finetuned%20model/visual%20encoder/matcha-chart2text-pew.ipynb)
-Utilizes a pre-trained image-to-text generation model with datasets specifically designed for tasks involving question answering about charts. One such dataset is ChartQA.
+[The AutoChart dataset](https://paperswithcode.com/paper/autochart-a-dataset-for-chart-to-text)
+is a valuable resource for training models in the task of chart-to-text generation. It provides a rich collection of chart images paired with corresponding textual descriptions, facilitating models to learn the relationship between visual representations of data and their natural language explanations.
 
-#### 3.1.1. Key Characteristics of ChartQA:
-**I. Focus:** Question Answering (QA) about charts, emphasizing visual and logical reasoning.
+#### 3.1.1.Key Characteristics of AutoChart Dataset:
+
+**I. Focus:** Chart-to-text generation, aiming to generate comprehensive textual descriptions that go beyond simple captions.
+
+**II.Content:**
+1) A large collection of chart images encompassing various types (bar, line, scatter, etc.).
+2) Textual summaries authored by humans, offering analytical descriptions of the data presented in the charts.
+3) The summaries may include insights, trends, and comparisons derived from the charts.
  
-**II. Content:**
-1) Over 9.6K human-written questions.
-2) 23.1K questions automatically generated from human-written chart summaries.
-3) Covers various chart types (bar, line, scatter).
-4) Questions involve complex reasoning, visual features, and logical operations on chart data.
- 
-**III. Limitations:**
-Limitations of existing chart QA datasets
-1) Template-based questions with limited vocabulary. 
-2) Restricted answer options.
-3) Lack of focus on visual and logical reasoning.
+**III. Strengths:**
+
+**1) Large Scale:** The extensive dataset size allows models to learn robust patterns and generalize effectively to unseen charts.
+
+**2) Analytical Descriptions:** Rich textual summaries provide more than just captions, promoting model understanding of chart elements, their relationships, and the underlying data insights.
+
+**3) Diverse Charts:** Covering various chart types enhances model capability in handling different data visualizations.
  
 **IV. Significance:**
-1) Provides a more realistic benchmark for evaluating chart QA models.
-2) Encourages development of models that can handle complex, visually-driven questions.
+1) AutoChart serves as a crucial benchmark for evaluating the performance of chart-to-text generation models.
+2) It fosters the development of models that can generate informative and comprehensive textual descriptions of charts, aiding in data exploration and communication.
 
 #### 3.1.2. Alignment with This Work:
-1) While the current code trains a model for chart summarization, datasets like ChartQA highlight the growing importance of models that can reason about and answer intricate questions posed on charts.
-2) Future improvements to this work could involve incorporating techniques or models specifically designed for chart-based question answering tasks, potentially leveraging datasets like ChartQA for training and evaluation.
+The current work aligns with the focus of the AutoChart dataset by training a model for chart-to-text generation. By leveraging this dataset, the model learns to analyze chart elements, understand the underlying data, and generate textual descriptions that effectively convey the information presented in the charts.
 
 ### 3.2. Data Preparation
 
@@ -198,7 +201,7 @@ This function retrieves image data and corresponding summaries based on chart ty
 1) The optimizer is an algorithm that updates the model's weights based on the calculated loss during training. Adafactor is a relatively recent optimizer that adapts the learning rate for each parameter individually.
 2) The learning rate (lr=0.01) controls how much the model's weights are adjusted in each training step. A higher learning rate can lead to faster convergence but also increase the risk of instability, while a lower learning rate can lead to slower convergence but potentially better generalization.
 
-***IV.Cosine Learning Rate Scheduler (scheduler = get_cosine_schedule_with_warmup)**
+**IV.Cosine Learning Rate Scheduler (scheduler = get_cosine_schedule_with_warmup)**
 1) A learning rate scheduler dynamically adjusts the learning rate throughout training. The code utilizes a cosine learning rate scheduler with warmup.
 2) This scheduler starts with a low learning rate, gradually increases it to a peak value, and then decreases it following a cosine curve. The warmup period allows the model to learn initial features before applying the full learning rate.
 3) Implementing a learning rate scheduler can help the model converge more effectively and potentially achieve better performance.
