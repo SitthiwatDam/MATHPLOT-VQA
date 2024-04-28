@@ -43,14 +43,14 @@ We'll be developing a robust application leveraging Flask as the backend to hand
 ### 1.4. Expected Results
 
 #### User Interaction
-**1) Seamless Graph Upload:** Users can effortlessly upload graph images through the system's interface. This should involve functionalities like image selection from device storage.
+**1. Seamless Graph Upload:** Users can effortlessly upload graph images through the system's interface. This should involve functionalities like image selection from device storage.
 
-**2) Contextual Question Input:** The system allows users to ask questions directly related to the uploaded graph. This means the questions should be phrased in a way that considers the graph's structure and properties.
+**2. Contextual Question Input:** The system allows users to ask questions directly related to the uploaded graph. This means the questions should be phrased in a way that considers the graph's structure and properties.
 
 #### System Response
-**1) Math Question Solving:** When a user asks a math question that can be solved using the graph data, the system should provide the solution along with a step-by-step explanation. This explanation should be clear and understandable, ideally breaking down the process into logical steps.
+**1. Math Question Solving:** When a user asks a math question that can be solved using the graph data, the system should provide the solution along with a step-by-step explanation. This explanation should be clear and understandable, ideally breaking down the process into logical steps.
 
-**2) Graph Analysis and Interpretation:** The system should analyze the uploaded graph and offer insightful interpretations. This could include identifying key characteristics like the number of nodes and edges, degrees of nodes,  presence of cycles or paths, or highlighting any relevant patterns or trends within the graph structure.
+**2. Graph Analysis and Interpretation:** The system should analyze the uploaded graph and offer insightful interpretations. This could include identifying key characteristics like the number of nodes and edges, degrees of nodes,  presence of cycles or paths, or highlighting any relevant patterns or trends within the graph structure.
 
 #### Math PlotVQA Demo
 
@@ -62,9 +62,9 @@ The web application features a text input box where users can type a question, s
 
 | Name                     | Main Role           |
 |--------------------------|---------------------|
-| Sitthiwat Damrongpreechar| Application         |
+| Sitthiwat Damrongpreechar| Slide/Application   |
 | Pirunrat Kaewphanoaw     | Application         |
-| Munthitra Thadthapong    | Slide/ Document     |
+| Munthitra Thadthapong    | Document/ Slide     |
 | Parun Ngamcharoen        | Model               |
 | Nathas Sungworawongpana  | Model               |
 
@@ -136,11 +136,11 @@ is a valuable resource for training models in the task of chart-to-text generati
  
 **III. Strengths:**
 
-**1) Large Scale:** The extensive dataset size allows models to learn robust patterns and generalize effectively to unseen charts.
+**1. Large Scale:** The extensive dataset size allows models to learn robust patterns and generalize effectively to unseen charts.
 
-**2) Analytical Descriptions:** Rich textual summaries provide more than just captions, promoting model understanding of chart elements, their relationships, and the underlying data insights.
+**2. Analytical Descriptions:** Rich textual summaries provide more than just captions, promoting model understanding of chart elements, their relationships, and the underlying data insights.
 
-**3) Diverse Charts:** Covering various chart types enhances model capability in handling different data visualizations.
+**3. Diverse Charts:** Covering various chart types enhances model capability in handling different data visualizations.
  
 **IV. Significance:**
 1) AutoChart serves as a crucial benchmark for evaluating the performance of chart-to-text generation models.
@@ -154,36 +154,36 @@ The current work aligns with the focus of the AutoChart dataset by training a mo
 #### 3.2.1. CustomDataset Class: 
 This class is responsible for loading and preprocessing data for the model. It takes the following parameters:
 
-**- I. image_paths:** A list of file paths to the chart images.
+**- I.** `image_paths`: A list of file paths to the chart images.
  
-**- II.user_prompt:** A string representing the prompt provided to the model (e.g., "What is this chart about?").
+**- II.**`user_prompt`: A string representing the prompt provided to the model (e.g., "What is this chart about?").
  
-**- III. chart_summaries:** A list of textual summaries corresponding to each image in **image_paths**.
+**- III.** `chart_summaries`: A list of textual summaries corresponding to each image in **image_paths**.
  
-**- IV. processor:** A text processor object used for handling text data (e.g., tokenization, padding).
+**- IV.** `processor`: A text processor object used for handling text data (e.g., tokenization, padding).
 
 #### 3.2.2. get_autochart_urls Function:
 This function retrieves image data and corresponding summaries based on chart type. It takes two parameters:
 
-**- I. url_list:** A list of dictionaries containing chart URLs and potentially additional information.
+**- I.** `url_list`: A list of dictionaries containing chart URLs and potentially additional information.
 
-**- II. chart_type:** A string specifying the chart type (Bar, Line, or Scatter). Defaults to "Bar" if not provided.
+**- II.** `chart_type`: A string specifying the chart type (Bar, Line, or Scatter). Defaults to "Bar" if not provided.
 
-**- III.** It retrieves image paths by constructing file paths based on the chart type and index within the **url_list**.
+**- III.** It retrieves image paths by constructing file paths based on the chart type and index within the `url_list`.
 
-**- IV.** It extracts chart summaries from the **url_list** dictionaries.
+**- IV.** It extracts chart summaries from the `url_list` dictionaries.
 
 ### 3.3. Model and Preprocessing
 
 #### 3.3.1. Pix2StructForConditionalGeneration Model:
 
-**- I.** The code employs a pre-trained model **Pix2StructForConditionalGeneration** from the **google/matcha-chart2text-pew** model hub. This model architecture is specifically designed for image-to-text generation tasks.
+**- I.** The code employs a pre-trained model `Pix2StructForConditionalGeneration` from the `google/matcha-chart2text-AutoChart` model hub. This model architecture is specifically designed for image-to-text generation tasks.
 
 **- II.** It's crucial to choose a pre-trained model that has been trained on a similar task or domain (image-to-text generation) for optimal performance.
 
 #### 3.3.2. Pix2StructProcessor:
 
-**- I.** A text processor **Pix2StructProcessor** is loaded from the same model hub. This processor handles text data by performing actions like tokenization, padding, and adding special tokens.
+**- I.** A text processor `Pix2StructProcessor` is loaded from the same model hub. This processor handles text data by performing actions like tokenization, padding, and adding special tokens.
 
 **- II.** The processor ensures the text input aligns with the model's expectations.
 
@@ -209,46 +209,57 @@ This function retrieves image data and corresponding summaries based on chart ty
 #### 3.4.2. Training Loop:
 The **train** function plays a pivotal role in the model's training process. It iterates through epochs, performing the following steps within each epoch:
 
-**- I.Setting Model to Training Mode (model.train()):**
+**- I.Setting Model to Training Mode** (`model.train()`):
 This ensures the model is prepared for training, enabling operations like dropout and batch normalization that might be deactivated during evaluation.
 
-**- II.Iterating Through Data Batches (DataLoader):**
-The **DataLoader** shuffles the training data (if shuffle=True) and splits it into batches of a specified size (batch_size). This allows the model to process the data in smaller chunks, improving memory efficiency and potentially accelerating training.
+**- II.Iterating Through Data Batches** (`DataLoader`):
+The `DataLoader` shuffles the training data (if shuffle=True) and splits it into batches of a specified size (batch_size). This allows the model to process the data in smaller chunks, improving memory efficiency and potentially accelerating training.
 
-**- III. Clearing Optimizer Gradients (optimizer.zero_grad()):** Gradients track how the loss changes with respect to each model parameter (weight or bias). They are used by the optimizer to update the parameters in the direction that minimizes the loss. Clearing gradients before each training step ensures they accumulate only for the current batch, preventing outdated gradients from influencing parameter updates.
+**- III. Clearing Optimizer Gradients** (`optimizer.zero_grad()`): Gradients track how the loss changes with respect to each model parameter (weight or bias). They are used by the optimizer to update the parameters in the direction that minimizes the loss. Clearing gradients before each training step ensures they accumulate only for the current batch, preventing outdated gradients from influencing parameter updates.
 
-**- IV. Moving Data to Device (to(device)):**
-The code checks if a GPU is available using **torch.cuda.is_available()**. If so, it moves the tensors containing labels, flattened patches (image representations), and attention masks to the GPU using **.to(device)**. Training on a GPU can significantly speed up the process compared to using the CPU.
+**- IV. Moving Data to Device** (`to(device)`):
+The code checks if a GPU is available using `torch.cuda.is_available()`. If so, it moves the tensors containing labels, flattened patches (image representations), and attention masks to the GPU using `.to(device)`. Training on a GPU can significantly speed up the process compared to using the CPU.
 
-**- V.Forward Pass (outputs = model(...)):** The model takes the processed data (flattened patches and attention masks) along with labels (target text) as input and performs a forward pass through its layers. The forward pass computes the model's predictions and calculates the loss based on the difference between the predictions and the actual labels.
+**- V.Forward Pass** (`outputs = model(...)`): The model takes the processed data (flattened patches and attention masks) along with labels (target text) as input and performs a forward pass through its layers. The forward pass computes the model's predictions and calculates the loss based on the difference between the predictions and the actual labels.
 
-**- VI.Calculating Loss (loss = outputs.loss):**
+**- VI.Calculating Loss** (`loss = outputs.loss`):
 The loss function quantifies the discrepancy between the model's predictions and the ground truth (labels). A lower loss indicates better model performance.
 
-**- VII.Backpropagation (loss.backward()):**
+**- VII.Backpropagation** (`loss.backward()`):
 Backpropagation propagates the calculated loss backward through the model's layers. This process computes the gradients for each parameter, indicating how much they contributed to the loss.
 
-**- VIII.Updating Optimizer Parameters (optimizer.step()):** 
+**- VIII.Updating Optimizer Parameters** (`optimizer.step()`):
 The optimizer utilizes the gradients to update the model's weights and biases in a direction that minimizes the loss. The learning rate (set in the optimizer) determines the magnitude of these updates.
 
-**- IX.Updating Learning Rate Scheduler (scheduler.step()):**
+**- IX.Updating Learning Rate Scheduler** (`scheduler.step()`):
 After each training step, the learning rate scheduler might adjust the learning rate based on the pre-defined schedule (cosine with warmup in this case). This helps the model converge more effectively and potentially achieve better performance.
 
 ### 3.5. Experimental Design
 
-![Experiment](./figures/Experiment.drawio.png)
+![Experiment](./figures/Experiment.drawionew.png)
 
 Our proposed solution is a multimodal pipeline in which:
-1) User provides a chart image, a query they have about the provided chart, and a task that the model should perform in order to obtain the final result.
-2) Chart image is input into a chart summarizer, to obtain a text summary of the input chart. A fine-tuned Pix2Struct model for this task can be downloaded from [here](https://huggingface.co/google/matcha-chart2text-pew).
-3) Our system fetches an example from our database that corresponds with the user-specified task. For example, if a user specified that the query requires a task concerning "addition", then our system will fetch a problem-solution pair that involves using addition to find the solution.
-4) Concatenate the chart summary, problem-solution example, and user query using a prompt template.
-5) Input the concatenated prompt into the QA model to obtain the final answer.
+1) The user provides a chart image, a query they have about the provided chart, and a task that the model should perform in order to obtain the final result
+2) Chart image is input into a chart summarizer, to obtain a text summary of the input chart. A Pix2Struct-Based Chart Summarizer model for this task, Matcha-chart2text-AutoChart, will be finetuned with the AutoChart dataset. For this task can be downloaded from [here](https://gitlab.com/bottle_shop/snlg/chart/autochart).
+3) Concatenate the chart summary result and user query using a prompt template.
+4) Input the concatenated prompt into the QA model which is MiniChat-3B to obtain the final answer.
+5) Input the concatenated prompt into the QA model which is MiniChat-3B to obtain the final answer.
 
+### 3.6. Result of Fined-Tuned Model Compared with Pre-Train model for ChartSummarizer:
+In our previous progress report, We experimented with two chart summarizer models, MatCha-chart2text-pew [Link](https://huggingface.co/google/matcha-chart2text-pew) and MatCha-chart2text-statista [Link](https://huggingface.co/google/matcha-chart2text-statista). The results showed that while the chart summarizer worked well for some graphs. We combined the chart summary with the user query as a prompt and used the Minichat-3B QA model [Link](https://huggingface.co/GeneZC/MiniChat-3B) to generate answers for question-answering task. The results shows that the errors from the generated answers are highly correlated with those from the summaries generated from the chart summarization step. This is further proven in the case that the generated summary is correct, since the QA model was also able to provide a correct answer with good additional insight to the user query. This indicates that the performance of the QA model is mostly, if not, fully dependent on the chart summarizer.This brings us to train a model and do a crucial evaluation step – comparing the effectiveness of fine-tuned models for chart summarization against pre-trained models.
+![Finetuning](./figures/Finetuningresult.png)
+While the pre-trained chart summary model performed well with minimal errors. Conversely, the fine-tuned chart summarization model identified all errors within the charts.
 
-### 3.6. Evaluation
+### 3.7. Combine with the QA model
+![Comparison](./figures/QAModelcombine.png)
+This system is designed for users to ask questions about data visualized in charts. The user can input both a text prompt and a chart image. An advanced AI model, called a question answering (QA) model, will then analyze the chart to extract the information and summarize it in text format to answer the user's question.
 
 ## 4. Result
+![Comparison](./figures/CompareFineTunedPretrain.png)
+
+Our comparison between the pre-trained and fine-tuned models yielded interesting, yet unexpected results. While the pre-trained chart summary model performed well with minimal errors, the downstream pre-trained answer model exhibited significant errors, with roughly half of its answers being incorrect.
+
+Conversely, the fine-tuned chart summarization model identified all errors within the charts. However, this seemingly thorough analysis resulted in issues for the fine-tuned QA model, leading to entirely irrelevant answers. These findings suggest that the fine-tuning process might have overshot the mark, becoming overly sensitive to chart complexities and potentially misinterpreting the data.
 
 ### 4.1. Progress
 
