@@ -10,7 +10,7 @@ Our project was inspired by Symbolab's limitations. We noticed that it doesn't e
 To enhance our system's capabilities, we integrated the MATCHA model [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/matcha.md)
  , an enhanced version of the Pix2Struct model [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/pixel2struct.md) . MATCHA combines math reasoning and chart derendering tasks to improve visual language models' capabilities. This integration allows our system to better understand and respond to questions about graphs, making math more accessible and understandable for everyone, especially those who struggle with graph comprehension.
 
-Additionally, we utilized the ChartQA dataset [Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/chartvqa.md) to fine-tune our QA model. ChartQA focuses on visual and logical reasoning over charts, providing a benchmark for complex reasoning questions related to charts. By leveraging these resources and technologies, we aim to create a system that not only computes solutions but also helps users understand the meaning and context of graphs, ultimately making math easier and more accessible.
+Additionally, we utilized the AutoChart dataset to fine-tune our QA model and use ChartQA[Paper Summary](https://github.com/SitthiwatDam/MATHPLOT-VQA/blob/main/papers/chartvqa.md) to evaluate. ChartQA focuses on visual and logical reasoning over charts, providing a benchmark for complex reasoning questions related to charts. By leveraging these resources and technologies, we aim to create a system that not only computes solutions but also helps users understand the meaning and context of graphs, ultimately making math easier and more accessible.
 
 ### 1.2. Problem and Motivation
 
@@ -31,7 +31,7 @@ Users can easily upload mathematical graph images through the system interface, 
 The system enables users to ask contextually relevant questions about the submitted graph, fostering active engagement.
 
 ##### Graph-Related Answer Generation
-- **Math Question-solving (from graph):** The model provides the solutions to mathematical problems derived from the graph data, along with step-by-step explanations.
+- **Math Question-solving (from graph):** The model provides the solutions to mathematical problems derived from the graph data with detailed explanations.
 - **Graph Interpretation:** The system offers insightful analysis of graph data, elucidating key trends and relationships to aid user interpretation.
 
 #### 1.3.2. Architecture of Solution
@@ -48,9 +48,9 @@ We'll be developing a robust application leveraging Flask as the backend to hand
 **2. Contextual Question Input:** The system allows users to ask questions directly related to the uploaded graph. This means the questions should be phrased in a way that considers the graph's structure and properties.
 
 #### System Response
-**1. Math Question Solving:** When a user asks a math question that can be solved using the graph data, the system should provide the solution along with a step-by-step explanation. This explanation should be clear and understandable, ideally breaking down the process into logical steps.
+**1. Math Question Solving:** When a user asks a math question that can be solved using the graph data, the system should provide the solution along with a detailed explanation. This explanation should be clear and understandable, ideally breaking down the process into logical steps.
 
-**2. Graph Analysis and Interpretation:** The system should analyze the uploaded graph and offer insightful interpretations. This could include identifying key characteristics like the number of nodes and edges, degrees of nodes,  presence of cycles or paths, or highlighting any relevant patterns or trends within the graph structure.
+**2. Graph Analysis and Interpretation:** The system should analyze the uploaded graph and offer insightful interpretations. This could include identifying key characteristics like the height of bar chart, percentage of each slide in pie chart or highlighting any relevant patterns or trends within the graph structure.
 
 #### Math PlotVQA Demo
 
@@ -189,7 +189,7 @@ This function retrieves image data and corresponding summaries based on chart ty
 
 #### 3.3.1. Pix2StructForConditionalGeneration Model:
 
-**- I.** The code employs a pre-trained model `Pix2StructForConditionalGeneration` from the `google/matcha-chart2text-AutoChart` model hub. This model architecture is specifically designed for image-to-text generation tasks.
+**- I.** The code employs a pre-trained model `Pix2StructForConditionalGeneration` from the `google/matcha-chart2text-pew` model hub. This model architecture is specifically designed for image-to-text generation tasks.
 
 **- II.** It's crucial to choose a pre-trained model that has been trained on a similar task or domain (image-to-text generation) for optimal performance.
 
@@ -252,18 +252,18 @@ After each training step, the learning rate scheduler might adjust the learning 
 
 Our proposed solution is a multimodal pipeline in which:
 1) The user provides a chart image, a query they have about the provided chart, and a task that the model should perform in order to obtain the final result
-2) Chart image is input into a chart summarizer, to obtain a text summary of the input chart. A Pix2Struct-Based Chart Summarizer model for this task, Matcha-chart2text-AutoChart, will be finetuned with the AutoChart dataset. For this task can be downloaded from [here](https://gitlab.com/bottle_shop/snlg/chart/autochart).
+2) Chart image is input into a chart summarizer, to obtain a text summary of the input chart. A Pix2Struct-Based Chart Summarizer model for this task, Matcha-chart2text-pew, will be finetuned with the AutoChart dataset. For this task can be downloaded from [here](https://gitlab.com/bottle_shop/snlg/chart/autochart).
 3) Concatenate the chart summary result and user query using a prompt template.
 4) Input the concatenated prompt into the QA model which is MiniChat-3B to obtain the final answer.
 
 ### 3.6. Result of Fined-Tuned Model Compared with Pre-Train model for ChartSummarizer:
 In our previous progress report, We experimented with two chart summarizer models, MatCha-chart2text-pew [Link](https://huggingface.co/google/matcha-chart2text-pew) and MatCha-chart2text-statista [Link](https://huggingface.co/google/matcha-chart2text-statista). The results showed that while the chart summarizer worked well for some graphs. We combined the chart summary with the user query as a prompt and used the Minichat-3B QA model [Link](https://huggingface.co/GeneZC/MiniChat-3B) to generate answers for question-answering task. The results shows that the errors from the generated answers are highly correlated with those from the summaries generated from the chart summarization step. This is further proven in the case that the generated summary is correct, since the QA model was also able to provide a correct answer with good additional insight to the user query. This indicates that the performance of the QA model is mostly, if not, fully dependent on the chart summarizer.This brings us to train a model and do a crucial evaluation step – comparing the effectiveness of fine-tuned models for chart summarization against pre-trained models.
 ![Finetuning](./figures/Finetuningresult.png)
-While the pre-trained chart summary model performed well with minimal errors. Conversely, the fine-tuned chart summarization model identified all errors within the charts.
+While the pre-trained chart summary model performed well with minimal errors. Conversely, the fine-tuned chart summarization model hallucinated and generated only errors that are irrelavant to the charts.
 
 ### 3.7. Combine with the QA model
 ![Comparison](./figures/QAModelcombine.png)
-This system is designed for users to ask questions about data visualized in charts. The user can input both a text prompt and a chart image. An advanced AI model, called a question answering (QA) model, will then analyze the chart to extract the information and summarize it in text format to answer the user's question.
+This system is designed for users to ask questions about data visualized in charts. The user can input both a text prompt and a chart image. An advanced AI model namely a Chart Summarizer, will then analyze the chart to extract the information and summarize it in text format. A QA model then received the user question along with the chart summary which are concatenated together using our prompt format, to generated the final answer to user's question.
 
 ## 4. Result
 ![Comparison](./figures/CompareFineTunedPretrain.png)
