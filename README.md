@@ -258,7 +258,9 @@ Our proposed solution is a multimodal pipeline in which:
 
 ### 3.6. Result of Fined-Tuned Model Compared with Pre-Train model for ChartSummarizer:
 In our previous progress report, We experimented with two chart summarizer models, MatCha-chart2text-pew [Link](https://huggingface.co/google/matcha-chart2text-pew) and MatCha-chart2text-statista [Link](https://huggingface.co/google/matcha-chart2text-statista). The results showed that while the chart summarizer worked well for some graphs. We combined the chart summary with the user query as a prompt and used the Minichat-3B QA model [Link](https://huggingface.co/GeneZC/MiniChat-3B) to generate answers for question-answering task. The results shows that the errors from the generated answers are highly correlated with those from the summaries generated from the chart summarization step. This is further proven in the case that the generated summary is correct, since the QA model was also able to provide a correct answer with good additional insight to the user query. This indicates that the performance of the QA model is mostly, if not, fully dependent on the chart summarizer.This brings us to train a model and do a crucial evaluation step – comparing the effectiveness of fine-tuned models for chart summarization against pre-trained models.
+
 ![Finetuning](./figures/Finetuningresult.png)
+
 While the pre-trained chart summary model performed well with minimal errors. Conversely, the fine-tuned chart summarization model hallucinated and generated only errors that are irrelavant to the charts.
 
 ### 3.7. Combine with the QA model
@@ -268,9 +270,9 @@ This system is designed for users to ask questions about data visualized in char
 ## 4. Result
 ![Comparison](./figures/CompareFineTunedPretrain.png)
 
-Our comparison between the pre-trained and fine-tuned models yielded interesting, yet unexpected results. While the pre-trained chart summary model performed well with minimal errors, the downstream pre-trained answer model exhibited significant errors, with roughly half of its answers being incorrect.
+Our comparison between the pre-trained and fine-tuned models yielded interesting, yet unexpected results. While the pre-trained Chart Summarier model performed well with minimal errors, the downstream pre-trained answer model exhibited significant errors, with roughly half of its answers being incorrect due to hallucinations.
 
-Conversely, the fine-tuned chart summarization model identified all errors within the charts. However, this seemingly thorough analysis resulted in issues for the fine-tuned QA model, leading to entirely irrelevant answers. These findings suggest that the fine-tuning process might have overshot the mark, becoming overly sensitive to chart complexities and potentially misinterpreting the data.
+Conversely, the fine-tuned chart summarization model generated only errors that are entirely irrelavant to the chart. As such, this issue was propagated to the fine-tuned QA model, leading to entirely an irrelevant answer. These findings suggest that the fine-tuning process might have been underfitting, generalizing a chart to a generic summary which contains only keywords commonly used in the chart descriptions provided in the training set, and completely ignoring the actual content of the input chart.
 
 ### 4.1. Evaluation Score
 
@@ -308,8 +310,8 @@ Conversely, the fine-tuned chart summarization model identified all errors withi
 ## 5. Discussion
 
 ### 5.1. Result
-- The scoring results of the finetuned model appear better than the pre-trained model, but the actual interpretation suggests otherwise.This discrepancy indicates that the scoring method may not be effective. Since we only trained the model for five epochs, it might be insufficient for the model to reach optimal efficiency.
-- The web application meets all requirements, but it still takes a long time to generate answers.
+- The scoring results of the finetuned model appear better than the pre-trained model, but the actual interpretation suggests otherwise. This discrepancy indicates that the scoring method may not be effective. Since we only trained the model for five epochs, it might be insufficient for the model to reach optimal efficiency.
+- The web application meets all requirements, but it still takes a long time to generate answers due to high hardware requirements for both the Chart Summarizer and QA models.
 
 ### 5.2. Hypothesis
 In this study, we investigate whether fine-tuning a model with the AutoChart dataset leads to improved performance compared to using a pretrained model when answering questions based on line plots, bar plots, or scatter plots. Our hypothesis posits that the fine-tuned model would outperform the pretrained model in question answering related to charts. **However, the results of our experiment suggest otherwise.**
