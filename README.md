@@ -308,7 +308,7 @@ Conversely, the fine-tuned chart summarization model identified all errors withi
 ## 5. Discussion
 
 ### 5.1. Result
-- The performance of the finetuned model appears better than the pretrained model, but the scoring results suggest otherwise. This discrepancy indicates that the scoring method may not be effective. Since we only trained the model for five epochs, it might be insufficient for the model to reach optimal efficiency.
+- The scoring results of the finetuned model appear better than the pre-trained model, but the actual interpretation suggests otherwise.This discrepancy indicates that the scoring method may not be effective. Since we only trained the model for five epochs, it might be insufficient for the model to reach optimal efficiency.
 - The web application meets all requirements, but it still takes a long time to generate answers.
 
 ### 5.2. Hypothesis
