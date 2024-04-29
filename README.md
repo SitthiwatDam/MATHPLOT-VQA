@@ -328,6 +328,6 @@ If the hypothesis is not true, it would imply that fine-tuning the model with th
 ### 5.5. Future Work
 **1. Finetune the model:** Finetuned Model using better techniques such as LoRA or QLoRA and increase number of epochs to allow model convergence.
 
-**2. Deploying an AI model endpoint:** Upload finetuned model to HuggingFace/AWS Sagemaker to allow other users to experiment or deploy our model for their own purposes.
+**2. Deploying an AI model endpoint:** Deploy the finetuned model to HuggingFace/AWS Sagemaker to allow other users to experiment or integrate with their web application without concern about the hardware specification and hardware infrastructure.
 
 
